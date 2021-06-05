@@ -1,0 +1,96 @@
+<!DOCTYPE html >
+<html lang="fa" dir="rtl">
+    
+<head>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+	<link rel="stylesheet" href="../css/login.css">
+	<link rel="stylesheet" href="../css/rec_dbms.css">
+
+</head>
+<body>
+	<!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg" dir="ltr">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+              <i class="fa fa-database"></i>
+              سیستم توصیه گر 
+              DBMS
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link smoothScroll">درباره ی سیستم</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link contact">ورود</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+	
+	<section class="hero hero-bg d-flex justify-content-center align-items-center" dir="rtl">
+	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<img src="images/lighter.webp" class="img-fluid" alt="working girl">
+					</div>
+					
+				</div>
+				<div class="d-flex justify-content-center form_container">
+					<form>
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-user"></i></span>
+							</div>
+							<input type="text" id= "user_name_signup" name="" class="form-control input_user" value="" placeholder="ایمیل">
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							<input type="password" id="pass1_signup" name="" class="form-control input_pass" value="" placeholder="گذرواژه">
+						</div>
+                        <div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							<input type="password" id="pass2_signup" name="" class="form-control input_pass" value="" placeholder="تکرار گذرواژه">
+						</div>
+						<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="customControlInline">
+								<!--<label class="custom-control-label" for="customControlInline">Remember me</label>-->
+							</div>
+						</div>
+							<div class="d-flex justify-content-center mt-3 login_container">
+				 	<button type="button" name="button" class="btn login_btn">ثبت حساب </button>
+				   </div>
+					</form>
+				</div>
+		
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						 <a href="#" class="ml-2">حساب داشتید؟</a>
+					</div>
+					<div class="d-flex justify-content-center links">
+						<!--<a href="#">Forgot your password?</a>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+	<script src="../jquery.min.js"></script>
+
+</body>
+</html>
