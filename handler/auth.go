@@ -20,10 +20,10 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 			"/user/new",
 			"/user/login",
 			"/api/quote",
+			"/user/profile",
 		}
 
 		if needsAuth := os.Getenv("NEEDS_AUTH"); needsAuth == "yes" {
-			fmt.Println("Auth needed for quote api")
 			notAuth = []string{
 				"/user/new",
 				"/user/login",
@@ -52,11 +52,8 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 			respond(w, response)
 			return
 		}
-
-		//The token normally comes in format `Bearer {token-body}`, we check if the
-		//retrieved token matched this requirement
 		splitted := strings.Split(tokenHeader, " ")
-		if len(splitted) != 2 {
+		if len(splitted) != 1 {
 			response = message(false, "Invalid/Malformed auth token")
 			w.WriteHeader(http.StatusForbidden)
 			w.Header().Add("Content-Type", "application/json")
@@ -64,7 +61,7 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 			return
 		}
 
-		tokenPart := splitted[1] //Grab the token part, what we are truly interested in
+		tokenPart := splitted[0] //Grab the token part, what we are truly interested in
 		tk := &token{}
 
 		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {

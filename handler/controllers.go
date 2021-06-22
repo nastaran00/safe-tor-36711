@@ -115,6 +115,6 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 
 func QuoteResponse(c *gin.Context) {
 	resp := message(true, "Success")
-	resp["data"] = getRandomQuote()
+	resp["data"] = "new new new new enw new newn ewjdkfh skhfd"
 	respond(c.Writer, resp)
 }
