@@ -19,6 +19,7 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 		notAuth := []string{
 			"/user/new",
 			"/user/login",
+			"/api/quote",
 		}
 
 		if needsAuth := os.Getenv("NEEDS_AUTH"); needsAuth == "yes" {
@@ -26,6 +27,7 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 			notAuth = []string{
 				"/user/new",
 				"/user/login",
+				"/recommendersystem",
 			}
 		}
 

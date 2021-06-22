@@ -83,10 +83,14 @@ func main() {
 	router.Static("/js", "views/js")
 	router.GET("/", handler.RenderHome)
 	router.GET("/signuplogin", handler.Signuplogin)
-	router.GET("/signup", handler.Signup)
+	router.GET("/signup", handler.Signuppage)
+	router.GET("/home", handler.Homelogged)
+	router.GET("/profile", handler.Profile)
+
 	router.Use(Wrap(handler.JwtAuthentication))
 
-	router.GET("/home", handler.Homelogged)
+	router.GET("/recommendersystem", handler.Recommendersystem)
+
 	router.POST("/user/new", handler.Addpeople)
 	router.POST("/user/login", handler.Authenticate)
 	router.Run()

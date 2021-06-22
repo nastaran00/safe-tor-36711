@@ -42,10 +42,26 @@ func Homelogged(c *gin.Context) {
 	//	"message": "success",
 	//})
 }
-func Signup(c *gin.Context) {
+func Recommendersystem(c *gin.Context) {
+	c.HTML(
+		http.StatusOK,
+		"recommenderPage.html",
+		gin.H{
+			"title": "rec Page",
+		})
+}
+func Signuppage(c *gin.Context) {
 	c.HTML(
 		http.StatusOK,
 		"signup.html",
+		gin.H{
+			"title": "login Page",
+		})
+}
+func Profile(c *gin.Context) {
+	c.HTML(
+		http.StatusOK,
+		"profile.html",
 		gin.H{
 			"title": "login Page",
 		})
@@ -97,8 +113,8 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 	respond(w, resp)
 }
 
-func quoteResponse(w http.ResponseWriter, r *http.Request) {
+func QuoteResponse(c *gin.Context) {
 	resp := message(true, "Success")
 	resp["data"] = getRandomQuote()
-	respond(w, resp)
+	respond(c.Writer, resp)
 }
