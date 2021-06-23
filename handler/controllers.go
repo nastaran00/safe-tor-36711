@@ -22,7 +22,7 @@ func Welcome(c *gin.Context) {
 func Signuplogin(c *gin.Context) {
 	c.HTML(
 		http.StatusOK,
-		"loginSignup.html",
+		"loginSignup.html", //"new.html", //
 		gin.H{
 			"title": "login Page",
 		})
@@ -100,6 +100,24 @@ func Authenticate(c *gin.Context) {
 			"title": "signed Page",
 		})
 }
+func Editing(c *gin.Context) {
+	someUser := &userAccount{}
+	err := json.NewDecoder(c.Request.Body).Decode(someUser)
+	if err != nil {
+		respond(c.Writer, message(false, "Invalid request"))
+		return
+	}
+
+	resp := profile_edit(someUser.Email, someUser.Password)
+	//respond(w, resp)
+	//login(someUser.Email, someUser.Password)
+	c.JSON(
+		http.StatusOK,
+		gin.H{
+			"resp":  resp,
+			"title": "signed Page",
+		})
+}
 
 var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 	someUser := &userAccount{}
@@ -111,6 +129,11 @@ var CreateAccount = func(w http.ResponseWriter, r *http.Request) {
 
 	resp := someUser.Create() //Create account
 	respond(w, resp)
+}
+
+func Logout(c *gin.Context) {
+	resp := message(true, "Success")
+	respond(c.Writer, resp)
 }
 
 func QuoteResponse(c *gin.Context) {

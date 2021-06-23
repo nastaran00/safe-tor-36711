@@ -20,7 +20,9 @@ var JwtAuthentication = func(next http.Handler) http.Handler {
 			"/user/new",
 			"/user/login",
 			"/api/quote",
-			"/user/profile",
+			"/user/home",
+			"/user/eddition",
+			"/user/logout",
 		}
 
 		if needsAuth := os.Getenv("NEEDS_AUTH"); needsAuth == "yes" {

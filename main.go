@@ -85,7 +85,7 @@ func main() {
 	router.GET("/", handler.RenderHome)
 	router.GET("/signuplogin", handler.Signuplogin)
 	router.GET("/signup", handler.Signuppage)
-	//router.GET("/home", handler.Homelogged)
+	router.GET("/home", handler.Homelogged)
 	router.GET("/profile", handler.Profile)
 
 	router.Use(Wrap(handler.JwtAuthentication))
@@ -94,6 +94,8 @@ func main() {
 
 	router.POST("/user/new", handler.Addpeople)
 	router.POST("/user/login", handler.Authenticate)
+	router.GET("/user/logout", handler.Logout)
+	router.POST("/user/eddition", handler.Editing)
 	router.GET("/user/profile", handler.Profile)
 	router.GET("/api/quote", handler.QuoteResponse)
 	router.Run()

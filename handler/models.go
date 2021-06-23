@@ -59,6 +59,7 @@ type userAccount struct {
 	gorm.Model
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	Log      string `json:"log"`
 	Token    string `json:"token" sql:"-"`
 }
 
@@ -89,6 +90,7 @@ func (someUser *userAccount) Create() map[string]interface{} {
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(someUser.Password), bcrypt.DefaultCost)
 	someUser.Password = string(hashedPassword)
+	someUser.Log = "true"
 
 	getDB().Create(someUser)
 
@@ -116,13 +118,14 @@ func login(email, password string) map[string]interface{} {
 			return message(false, "Email address not found")
 		}
 	}
-
+	getDB().Table("user_accounts").Where("email = ?", email).First(someUser).Update("log", "true")
 	err = bcrypt.CompareHashAndPassword([]byte(someUser.Password), []byte(password))
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
 		return message(false, "Invalid login creds.")
 	}
-
-	someUser.Password = ""
+	//someUser.Log = someUser.Password
+	someUser.Password = password
+	//someUser.Password = ""
 
 	tk := &token{UserID: someUser.ID}
 	tk.ExpiresAt = time.Now().UTC().Add((600 * time.Second)).Unix()
@@ -131,6 +134,22 @@ func login(email, password string) map[string]interface{} {
 	someUser.Token = tokenString
 
 	resp := message(true, "Logged In")
+	resp["userAccount"] = someUser
+	return resp
+}
+func logoutt(email string) map[string]interface{} {
+	someUser := &userAccount{}
+	err := getDB().Table("user_accounts").Where("email = ?", email).First(someUser).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return message(false, "Email address not found")
+		}
+	}
+	getDB().Table("user_accounts").Where("email = ?", email).First(someUser).Update("log", "false")
+
+	//someUser.Password = ""
+
+	resp := message(true, "Logged out")
 	resp["userAccount"] = someUser
 	return resp
 }
@@ -165,4 +184,25 @@ func getRandomQuote() string {
 	num := rand.Intn(len(*quotes))
 	s := (*quotes)[num] // stupid syntax, more info: https://flaviocopes.com/golang-does-not-support-indexing/
 	return fmt.Sprintf("Einstein said: %s", s)
+}
+func profile_edit(email, password string) map[string]interface{} {
+	someUser := &userAccount{}
+	err := getDB().Table("user_accounts").Where("email = ?", email).First(someUser).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return message(false, "Email address not found")
+		}
+	}
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	ss := string(hashedPassword)
+	getDB().Table("user_accounts").Where("email = ?", email).First(someUser).Update("password", ss)
+
+	//getDB().Create(someUser)
+	someUser.Password = password
+	someUser.Log = string(hashedPassword)
+
+	resp := message(true, "eddited")
+	resp["userAccount"] = someUser
+	return resp
 }
